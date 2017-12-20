@@ -1,0 +1,23 @@
+{
+  "name": "webpack-manifest-generator-plugin",
+  "version": "1.0.0",
+  "description": "Webpack plugin for generating an ordered manifest file",
+  "main": "index.js",
+  "author": "Gustavo Bastos <me@gustavovinicius.com>",
+  "repository": "https://github.com/gustavovnicius/webpack-manifest-generator-plugin",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint . --ext js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "mkdirp": "^0.5.1",
+    "toposort": "^1.0.6"
+  },
+  "devDependencies": {
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "jest": "^22.0.3"
+  }
+}
