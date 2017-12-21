@@ -77,7 +77,7 @@ describe('AssetsManifest', () => {
             id: 'level-3',
             js: [],
             css: [],
-            next: undefined,
+            next: null,
           },
         },
       });
@@ -100,7 +100,7 @@ describe('AssetsManifest', () => {
       expect(plugin.mapChunksToManifest(chunks)).toEqual({
         id: 'chunk',
         js: ['index.js'],
-        next: undefined,
+        next: null,
       });
     });
 
@@ -120,7 +120,7 @@ describe('AssetsManifest', () => {
 
       expect(plugin.mapChunksToManifest(chunks)).toEqual({
         id: 'chunk',
-        next: undefined,
+        next: null,
       });
     });
 
@@ -144,7 +144,7 @@ describe('AssetsManifest', () => {
         css: [
           'a_path/index.css',
         ],
-        next: undefined,
+        next: null,
       });
     });
   });

@@ -90,7 +90,7 @@ class AssetsManifest {
 
     const nextElement = ([head, ...tail]) => {
       if (!head) {
-        return undefined;
+        return null;
       }
 
       return {
