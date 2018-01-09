@@ -10,6 +10,7 @@ class AssetsManifest {
       filename: 'assets-manifest.json',
       extensions: ['js', 'css'],
       prettyPrint: true,
+      metadata: undefined,
       ...options,
     };
   }
@@ -36,17 +37,10 @@ class AssetsManifest {
       };
 
       mkdirp(dest, () => {
-        if (opts.merge) {
-          fs.readFile(file, 'utf8', (error, content) => {
-            if (error) {
-              writeFile(manifest);
-            } else {
-              const data = JSON.parse(content);
-              writeFile({ ...data, ...manifest });
-            }
-          });
+        if (opts.metadata) {
+          writeFile({ files: manifest, metadata: opts.metadata });
         } else {
-          writeFile(manifest);
+          writeFile({ files: manifest });
         }
       });
     });

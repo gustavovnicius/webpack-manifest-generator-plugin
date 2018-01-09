@@ -9,6 +9,7 @@ describe('AssetsManifest', () => {
       filename: 'assets-manifest.json',
       extensions: ['js', 'css'],
       prettyPrint: true,
+      metadata: undefined,
     });
   });
 
