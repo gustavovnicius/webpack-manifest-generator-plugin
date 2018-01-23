@@ -1,3 +1,4 @@
+const urljoin = require('url-join');
 const path = require('path');
 const mkdirp = require('mkdirp');
 const fs = require('fs');
@@ -104,7 +105,7 @@ class AssetsManifest {
     return {
       [extension]: files
         .filter(file => file.endsWith(extension))
-        .map(file => path.join(publicPath, file)),
+        .map(file => (publicPath.length === 0 ? file : urljoin(publicPath, file))),
     };
   }
 }

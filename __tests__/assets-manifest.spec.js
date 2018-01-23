@@ -137,13 +137,37 @@ describe('AssetsManifest', () => {
         },
       ];
 
-      expect(plugin.mapChunksToManifest(chunks, { publicPath: 'a_path' })).toEqual({
+      expect(plugin.mapChunksToManifest(chunks, { publicPath: 'a/path' })).toEqual({
         id: 'chunk',
         js: [
-          'a_path/index.js',
+          'a/path/index.js',
         ],
         css: [
-          'a_path/index.css',
+          'a/path/index.css',
+        ],
+        next: null,
+      });
+    });
+
+    it('adds the publicPath option with a protocol on each file name', () => {
+      const plugin = new AssetsManifest();
+      const chunks = [
+        {
+          id: 'chunk',
+          files: [
+            'index.css',
+            'index.js',
+          ],
+        },
+      ];
+
+      expect(plugin.mapChunksToManifest(chunks, { publicPath: 'https://a/path' })).toEqual({
+        id: 'chunk',
+        js: [
+          'https://a/path/index.js',
+        ],
+        css: [
+          'https://a/path/index.css',
         ],
         next: null,
       });
