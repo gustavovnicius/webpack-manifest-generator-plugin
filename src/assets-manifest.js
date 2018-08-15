@@ -23,7 +23,15 @@ class AssetsManifest {
       const base = conf.output.publicPath || '';
 
       const { chunks } = compilation.getStats().toJson();
-      const sortedChunks = this.sortChunks(chunks);
+
+      let sortedChunks = {};
+
+      if (compilation.chunkGroups) {
+        sortedChunks = this.sortChunkGroups(chunks, compilation.chunkGroups);
+      } else {
+        sortedChunks = this.sortChunks(chunks);
+      }
+
       const manifest = this.mapChunksToManifest(sortedChunks, { publicPath: base });
 
       const dest = opts.path || conf.output.path;
@@ -45,6 +53,30 @@ class AssetsManifest {
         }
       });
     });
+  }
+
+  sortChunkGroups(chunks, chunkGroups) {
+    const nodeMap = {};
+    chunks.forEach((chunk) => {
+      nodeMap[chunk.id] = chunk;
+    });
+
+    const edges = chunkGroups.reduce((result, chunkGroup) => result.concat(Array.from(chunkGroup.parentsIterable, parentGroup => [parentGroup, chunkGroup])), []);
+    console.log(edges);
+    const sortedGroups = toposort.array(chunkGroups, edges);
+    console.log(sortedGroups);
+    // flatten chunkGroup into chunks
+    const sortedChunks = sortedGroups
+      .reduce((result, chunkGroup) => result.concat(chunkGroup.chunks), [])
+      .map(chunk => nodeMap[chunk.id])
+      .filter((chunk, index, self) => {
+        // make sure exists (ie excluded chunks not in nodeMap)
+        const exists = !!chunk;
+        // make sure we have a unique list
+        const unique = self.indexOf(chunk) === index;
+        return exists && unique;
+      });
+    return sortedChunks;
   }
 
   sortChunks(chunks) {
