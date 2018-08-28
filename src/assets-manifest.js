@@ -62,9 +62,7 @@ class AssetsManifest {
     });
 
     const edges = chunkGroups.reduce((result, chunkGroup) => result.concat(Array.from(chunkGroup.parentsIterable, parentGroup => [parentGroup, chunkGroup])), []);
-    console.log(edges);
     const sortedGroups = toposort.array(chunkGroups, edges);
-    console.log(sortedGroups);
     // flatten chunkGroup into chunks
     const sortedChunks = sortedGroups
       .reduce((result, chunkGroup) => result.concat(chunkGroup.chunks), [])
